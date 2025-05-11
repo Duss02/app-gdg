@@ -1,78 +1,81 @@
-# Visualizzatore di Accessibilità
+# Accessibility Viewer
 
-Questa applicazione è progettata per migliorare l'accessibilità del web visualizzando siti web in modo ottimizzato per le esigenze degli utenti con disabilità come dislessia, daltonismo o problemi uditivi.
+This application is designed to improve web accessibility by rendering websites in a way optimized for users with disabilities such as dyslexia, color blindness, or hearing impairments.
 
-## Funzionalità
+## Setup
+Make sure that the server is running in localhost:8000 as it will be used to do the agentic and computer use work
 
-- **Onboarding personalizzato**: raccoglie informazioni sulle esigenze di accessibilità dell'utente (dislessia, daltonismo, sordità, ecc.)
-- **Salvataggio delle preferenze**: memorizza le configurazioni dell'utente nel localStorage
-- **Visualizzazione ottimizzata**: adatta l'interfaccia in base alle esigenze dell'utente
-- **Ricezione di azioni esterne**: visualizza le azioni disponibili in una pagina target in modo accessibile
+## Features
 
-## Come utilizzare l'applicazione
+* **Personalized onboarding**: collects information about the user's accessibility needs (dyslexia, color blindness, deafness, etc.)
+* **Preference saving**: stores the user's configuration in localStorage
+* **Optimized rendering**: adapts the interface based on the user's needs
+* **External actions intake**: displays available actions on a target page in an accessible way
 
-1. **Configurazione iniziale**: naviga su `/onboarding` per impostare le tue preferenze di accessibilità
-2. **Visualizzazione di un sito**: visita l'applicazione con un parametro `actions` nell'URL che contiene le informazioni sugli elementi del sito target
+## How to Use the Application
 
-### Formato dei dati delle azioni
+1. **Initial Setup**: navigate to `/onboarding` to configure your accessibility preferences
+2. **Viewing a Website**: visit the application with an `actions` parameter in the URL containing information about elements on the target website
 
-L'applicazione accetta le azioni sotto forma di parametro URL codificato con il seguente formato:
+### Action Data Format
+
+The application accepts actions as a URL-encoded parameter with the following format:
 
 ```json
 {
   "clickElements": [
     {
-      "id": "string o null se non disponibile",
-      "label": "testo mostrato sull'elemento",
-      "description": "breve descrizione di ciò che fa questo elemento"
+      "id": "string or null if not available",
+      "label": "text displayed on the element",
+      "description": "short description of what this element does"
     }
   ],
   "selectElements": [
     {
-      "id": "string o null se non disponibile",
-      "label": "testo associato a questo elemento di selezione",
-      "description": "cosa controlla o influenza questa selezione",
-      "options": ["opzione1", "opzione2", "opzione3"]
+      "id": "string or null if not available",
+      "label": "text associated with this selection element",
+      "description": "what this selection controls or influences",
+      "options": ["option1", "option2", "option3"]
     }
   ],
   "inputElements": [
     {
-      "id": "string o null se non disponibile",
-      "label": "testo dell'etichetta del campo",
-      "description": "quali informazioni raccoglie questo campo",
-      "placeholder": "testo segnaposto se presente, altrimenti stringa vuota",
-      "type": "text, number, email, o password"
+      "id": "string or null if not available",
+      "label": "label text of the field",
+      "description": "what information this field collects",
+      "placeholder": "placeholder text if present, otherwise empty string",
+      "type": "text, number, email, or password"
     }
   ]
 }
 ```
 
-## Pagina di test
+## Test Page
 
-Per testare il funzionamento dell'applicazione, visitare la pagina `/test` che contiene un esempio di dati e un link per testare la visualizzazione ottimizzata.
+To test the application's functionality, visit the `/test` page, which contains sample data and a link to test the optimized rendering.
 
-## Tecnologie utilizzate
+## Technologies Used
 
-- Next.js 15
-- React 19
-- TypeScript
-- Tailwind CSS
+* Next.js 15
+* React 19
+* TypeScript
+* Tailwind CSS
 
-## Sviluppo locale
+## Local Development
 
-Per avviare l'applicazione in modalità di sviluppo:
+To start the application in development mode:
 
 ```bash
 pnpm dev
 ```
 
-Per costruire l'applicazione per la produzione:
+To build the application for production:
 
 ```bash
 pnpm build
 ```
 
-Per avviare l'applicazione in modalità di produzione:
+To start the application in production mode:
 
 ```bash
 pnpm start
