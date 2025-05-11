@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useUserConfigContext } from '../context/UserConfigContext';
 
-// Definizione delle interfacce per il nuovo formato JSON
+// Definition of interfaces for the new JSON format
 interface BaseElement {
   id: string | null;
   label: string;
@@ -63,7 +63,7 @@ export default function ActionsList() {
   const [formValues, setFormValues] = useState<{[key: string]: {[key: string]: string}}>({});
   const [openForms, setOpenForms] = useState<{[key: string]: boolean}>({});
   
-  // Inizializza i valori per i campi select e input
+  // Initialize values for select fields and inputs
   useEffect(() => {
     if (pageActions) {
       const newSelectValues: {[key: string]: string} = {};
@@ -86,7 +86,7 @@ export default function ActionsList() {
           });
           newFormValues[elementId] = formInputs;
           
-          // Apri automaticamente il form se ha un'importanza alta
+          // Automatically open the form if it has high importance
           if (element.importance >= 8 || index === 0) {
             newOpenForms[elementId] = true;
           } else {
@@ -103,7 +103,7 @@ export default function ActionsList() {
   }, [pageActions]);
 
   useEffect(() => {
-    // Ottieni i dati delle azioni dalla URL
+    // Get action data from URL
     const actionsParam = searchParams.get('actions');
     
     if (actionsParam) {
@@ -112,13 +112,13 @@ export default function ActionsList() {
         const parsedActions = JSON.parse(decodedActions) as PageActionsData;
         setPageActions(parsedActions);
       } catch (e) {
-        console.error('Errore nel parsing dei dati delle azioni:', e);
-        setError('Errore nel parsing dei dati delle azioni');
+        console.error('Error parsing action data:', e);
+        setError('Error parsing action data');
       }
     }
   }, [searchParams]);
 
-  // Funzione per aggiornare il valore di un input
+  // Function to update an input value
   const handleInputChange = (id: string, value: string) => {
     setInputValues(prev => ({
       ...prev,
@@ -126,7 +126,7 @@ export default function ActionsList() {
     }));
   };
   
-  // Funzione per aggiornare il valore di un select
+  // Function to update a select value
   const handleSelectChange = (id: string, value: string) => {
     setSelectValues(prev => ({
       ...prev,
@@ -134,7 +134,7 @@ export default function ActionsList() {
     }));
   };
 
-  // Funzione per eseguire un'azione cliccabile
+  // Function to execute a clickable action
   const handleClickAction = async (element: ClickElement) => {
     const elementId = element.id || `click-${Math.random().toString(36).substring(2, 9)}`;
     setActionInProgress(elementId);
@@ -164,21 +164,21 @@ export default function ActionsList() {
       } else {
         setActionResults(prev => ({
           ...prev,
-          [elementId]: `Errore: ${result.message || 'Impossibile eseguire l\'azione'}`
+          [elementId]: `Error: ${result.message || 'Unable to execute the action'}`
         }));
       }
     } catch (err) {
-      console.error('Errore nella chiamata API:', err);
+      console.error('Error in API call:', err);
       setActionResults(prev => ({
         ...prev,
-        [elementId]: 'Errore di connessione al server'
+        [elementId]: 'Server connection error'
       }));
     } finally {
       setActionInProgress(null);
     }
   };
   
-  // Funzione per eseguire un'azione di input
+  // Function to execute an input action
   const handleInputAction = async (element: InputElement, id: string) => {
     setActionInProgress(id);
     
@@ -212,21 +212,21 @@ export default function ActionsList() {
       } else {
         setActionResults(prev => ({
           ...prev,
-          [id]: `Errore: ${result.message || 'Impossibile eseguire l\'azione'}`
+          [id]: `Error: ${result.message || 'Unable to execute the action'}`
         }));
       }
     } catch (err) {
-      console.error('Errore nella chiamata API:', err);
+      console.error('Error in API call:', err);
       setActionResults(prev => ({
         ...prev,
-        [id]: 'Errore di connessione al server'
+        [id]: 'Server connection error'
       }));
     } finally {
       setActionInProgress(null);
     }
   };
   
-  // Funzione per eseguire un'azione di selezione
+  // Function to execute a selection action
   const handleSelectAction = async (element: SelectElement, id: string) => {
     setActionInProgress(id);
     
@@ -258,21 +258,21 @@ export default function ActionsList() {
       } else {
         setActionResults(prev => ({
           ...prev,
-          [id]: `Errore: ${result.message || 'Impossibile eseguire l\'azione'}`
+          [id]: `Error: ${result.message || 'Unable to execute the action'}`
         }));
       }
     } catch (err) {
-      console.error('Errore nella chiamata API:', err);
+      console.error('Error in API call:', err);
       setActionResults(prev => ({
         ...prev,
-        [id]: 'Errore di connessione al server'
+        [id]: 'Server connection error'
       }));
     } finally {
       setActionInProgress(null);
     }
   };
 
-  // Funzione per gestire l'apertura/chiusura dei form
+  // Function to handle opening/closing forms
   const toggleForm = (id: string) => {
     setOpenForms(prev => ({
       ...prev,
@@ -280,7 +280,7 @@ export default function ActionsList() {
     }));
   };
 
-  // Funzione per aggiornare i valori dei campi dei form
+  // Function to update form field values
   const handleFormInputChange = (formId: string, inputId: string, value: string) => {
     setFormValues(prev => ({
       ...prev,
@@ -291,7 +291,7 @@ export default function ActionsList() {
     }));
   };
 
-  // Funzione per inviare un form
+  // Function to submit a form
   const handleFormSubmit = async (element: FormElement, formId: string) => {
     setActionInProgress(formId);
     
@@ -313,7 +313,7 @@ export default function ActionsList() {
             const inputId = `input-${formId.split('-')[1]}-${inputIndex}`;
             return {
               id: inputId,
-              label: input.label || "Campo",
+              label: input.label || "Field",
               value: formData[inputId] || ''
             };
           })
@@ -327,7 +327,7 @@ export default function ActionsList() {
           ...prev,
           [formId]: result.result
         }));
-        // Chiudi il form dopo l'invio con successo
+        // Close the form after successful submission
         setOpenForms(prev => ({
           ...prev,
           [formId]: false
@@ -335,21 +335,21 @@ export default function ActionsList() {
       } else {
         setActionResults(prev => ({
           ...prev,
-          [formId]: `Errore: ${result.message || 'Impossibile eseguire l\'azione'}`
+          [formId]: `Error: ${result.message || 'Unable to execute the action'}`
         }));
       }
     } catch (err) {
-      console.error('Errore nella chiamata API:', err);
+      console.error('Error in API call:', err);
       setActionResults(prev => ({
         ...prev,
-        [formId]: 'Errore di connessione al server'
+        [formId]: 'Server connection error'
       }));
     } finally {
       setActionInProgress(null);
     }
   };
 
-  // Funzione per applicare stili di accessibilità in base alla configurazione utente
+  // Function to apply accessibility styles based on user configuration
   const getAccessibilityStyles = () => {
     const styles: React.CSSProperties = {};
     
@@ -385,17 +385,17 @@ export default function ActionsList() {
   if (!pageActions) {
     return (
       <div className="p-6 bg-gray-50 text-gray-800 border-2 border-gray-300 rounded-md font-medium max-w-3xl mx-auto">
-        Nessuna azione disponibile
+        No actions available
       </div>
     );
   }
 
-  // Ordina gli elementi per importanza (decrescente)
+  // Sort elements by importance (descending)
   const sortedElements = [...pageActions.elements].sort((a, b) => b.importance - a.importance);
 
   return (
     <div style={getAccessibilityStyles()} className="p-6 bg-white max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-gray-900 border-b-2 border-gray-300 pb-4">Azioni disponibili in questa pagina</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-900 border-b-2 border-gray-300 pb-4">Available actions on this page</h2>
       
       <div className="space-y-8">
         <ul className="space-y-4">
@@ -446,7 +446,7 @@ export default function ActionsList() {
                           actionInProgress === elementId ? 'opacity-70 cursor-not-allowed' : ''
                         }`}
                       >
-                        {actionInProgress === elementId ? 'Esecuzione...' : 'Conferma'}
+                        {actionInProgress === elementId ? 'Processing...' : 'Confirm'}
                       </button>
                     </div>
                   </div>
@@ -471,7 +471,7 @@ export default function ActionsList() {
                           actionInProgress === elementId ? 'opacity-70 cursor-not-allowed' : ''
                         }`}
                       >
-                        {actionInProgress === elementId ? 'Esecuzione...' : 'Conferma'}
+                        {actionInProgress === elementId ? 'Processing...' : 'Confirm'}
                       </button>
                     </div>
                   </div>
@@ -526,7 +526,7 @@ export default function ActionsList() {
                           actionInProgress === elementId ? 'opacity-70 cursor-not-allowed' : ''
                         }`}
                       >
-                        {actionInProgress === elementId ? 'Invio in corso...' : (element as FormElement).submitButton.label}
+                        {actionInProgress === elementId ? 'Submitting...' : (element as FormElement).submitButton.label}
                       </button>
                     </form>
                   </div>
@@ -534,7 +534,7 @@ export default function ActionsList() {
                 
                 {hasResult && (
                   <div className="mt-4 p-4 bg-gray-100 border-2 border-gray-300 rounded-md">
-                    <div className="font-bold text-lg mb-1">Risultato:</div>
+                    <div className="font-bold text-lg mb-1">Result:</div>
                     <div className="text-gray-800">{actionResults[elementId]}</div>
                   </div>
                 )}
@@ -545,7 +545,7 @@ export default function ActionsList() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Esecuzione in corso...</span>
+                    <span>Processing...</span>
                   </div>
                 )}
               </li>

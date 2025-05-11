@@ -11,7 +11,7 @@ export default function AnalyzePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Funzione per applicare stili di accessibilità in base alla configurazione utente
+  // Function to apply accessibility styles based on user configuration
   const getAccessibilityStyles = () => {
     const styles: React.CSSProperties = {};
     
@@ -53,14 +53,14 @@ export default function AnalyzePage() {
       const result = await response.json();
 
       if (result.success && result.data) {
-        // Codifica i dati e reindirizza alla home page per visualizzarli
+        // Encode the data and redirect to the home page to display them
         const encodedData = encodeURIComponent(JSON.stringify(result.data));
         router.push(`/?actions=${encodedData}`);
       } else {
-        setError(result.message || 'Errore durante l\'analisi della pagina');
+        setError(result.message || 'Error analyzing the page');
       }
     } catch (err) {
-      setError('Errore di connessione al server. Assicurati che il server sia in esecuzione.');
+      setError('Connection error to the server. Make sure the server is running.');
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -70,9 +70,9 @@ export default function AnalyzePage() {
   return (
     <div className="min-h-screen p-8 sm:p-12 bg-white" style={getAccessibilityStyles()}>
       <header className="mb-10 max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">Analisi Pagina Web</h1>
+        <h1 className="text-4xl font-bold mb-4 text-gray-900">Web Page Analysis</h1>
         <p className="text-lg text-gray-800">
-          Inserisci l'URL di una pagina web da analizzare per l'accessibilità.
+          Enter the URL of a web page to analyze for accessibility.
         </p>
       </header>
 
@@ -85,7 +85,7 @@ export default function AnalyzePage() {
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-gray-50 p-8 rounded-lg border-2 border-gray-300 shadow-md">
         <div className="mb-6">
           <label htmlFor="url" className="block mb-3 font-bold text-xl text-gray-900">
-            URL della pagina
+            Page URL
           </label>
           <input
             type="url"
@@ -106,7 +106,7 @@ export default function AnalyzePage() {
             isLoading ? 'opacity-70 cursor-not-allowed' : ''
           }`}
         >
-          {isLoading ? 'Analisi in corso...' : 'Analizza pagina'}
+          {isLoading ? 'Analysis in progress...' : 'Analyze page'}
         </button>
       </form>
     </div>

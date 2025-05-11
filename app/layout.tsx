@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Visualizzatore di Accessibilità",
-  description: "Un'applicazione per visualizzare siti web con ottimizzazioni di accessibilità",
+  title: "Accessibility Viewer",
+  description: "An application to view websites with accessibility optimizations",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it">
+    <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

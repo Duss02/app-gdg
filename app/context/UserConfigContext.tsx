@@ -26,7 +26,7 @@ export const UserConfigProvider = ({ children }: { children: ReactNode }) => {
 export const useUserConfigContext = () => {
   const context = useContext(UserConfigContext);
   if (context === undefined) {
-    throw new Error('useUserConfigContext deve essere usato all\'interno di un UserConfigProvider');
+    throw new Error('useUserConfigContext must be used within a UserConfigProvider');
   }
   return context;
 }; 
