@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useUserConfigContext } from '../context/UserConfigContext';
 
 // Definition of interfaces for the new JSON format
@@ -53,6 +53,7 @@ interface PageActionsData {
 
 export default function ActionsList() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const { config } = useUserConfigContext();
   const [pageActions, setPageActions] = useState<PageActionsData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -118,6 +119,28 @@ export default function ActionsList() {
     }
   }, [searchParams]);
 
+  // Function to rescan the page after a successful action
+  const rescanPage = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/analyze-current-page', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      const result = await response.json();
+      
+      if (result.success && result.data) {
+        // Update the page actions with the new data
+        const encodedData = encodeURIComponent(JSON.stringify(result.data));
+        router.push(`/?actions=${encodedData}`);
+      }
+    } catch (err) {
+      console.error('Error rescanning page:', err);
+    }
+  };
+
   // Function to update an input value
   const handleInputChange = (id: string, value: string) => {
     setInputValues(prev => ({
@@ -161,6 +184,9 @@ export default function ActionsList() {
           ...prev,
           [elementId]: result.result
         }));
+        
+        // Rescan the page to update available actions
+        await rescanPage();
       } else {
         setActionResults(prev => ({
           ...prev,
@@ -209,6 +235,9 @@ export default function ActionsList() {
           ...prev,
           [id]: result.result
         }));
+        
+        // Rescan the page to update available actions
+        await rescanPage();
       } else {
         setActionResults(prev => ({
           ...prev,
@@ -255,6 +284,9 @@ export default function ActionsList() {
           ...prev,
           [id]: result.result
         }));
+        
+        // Rescan the page to update available actions
+        await rescanPage();
       } else {
         setActionResults(prev => ({
           ...prev,
@@ -332,6 +364,9 @@ export default function ActionsList() {
           ...prev,
           [formId]: false
         }));
+        
+        // Rescan the page to update available actions
+        await rescanPage();
       } else {
         setActionResults(prev => ({
           ...prev,
