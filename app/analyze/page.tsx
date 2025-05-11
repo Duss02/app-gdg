@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUserConfigContext } from '../context/UserConfigContext';
 
@@ -10,7 +10,6 @@ export default function AnalyzePage() {
   const [url, setUrl] = useState('https://google.com');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
- 
 
   // Funzione per applicare stili di accessibilità in base alla configurazione utente
   const getAccessibilityStyles = () => {
@@ -19,7 +18,7 @@ export default function AnalyzePage() {
     if (!config) return styles;
     
     if (config.fontSize === 'large') {
-      styles.fontSize = '1.3rem';
+      styles.fontSize = '1.25rem';
     } else if (config.fontSize === 'extra-large') {
       styles.fontSize = '1.6rem';
     }
@@ -30,8 +29,8 @@ export default function AnalyzePage() {
     }
     
     if (config.highContrast) {
-      styles.backgroundColor = '#000';
-      styles.color = '#fff';
+      styles.backgroundColor = '#ffffff';
+      styles.color = '#000000';
     }
     
     return styles;
@@ -69,32 +68,46 @@ export default function AnalyzePage() {
   };
 
   return (
-    <div className="min-h-screen p-8 sm:p-20 bg-white flex flex-col items-center justify-center" style={getAccessibilityStyles()}>
-      <header className="mb-10 text-center">
+    <div className="min-h-screen p-8 sm:p-12 bg-white" style={getAccessibilityStyles()}>
+      <header className="mb-10 max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold mb-4 text-gray-900">Analisi Pagina Web</h1>
-        <p className="text-gray-700 text-xl max-w-2xl">
+        <p className="text-lg text-gray-800">
           Inserisci l'URL di una pagina web da analizzare per l'accessibilità.
         </p>
       </header>
 
       {error && (
-        <div className="mb-8 p-6 bg-red-100 text-red-700 rounded-lg border-2 border-red-300 text-lg font-medium max-w-2xl w-full">
+        <div className="mb-8 p-5 bg-red-100 text-red-700 border-2 border-red-400 rounded-md font-medium max-w-3xl mx-auto">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="w-full max-w-2xl flex flex-col items-center">
+      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-gray-50 p-8 rounded-lg border-2 border-gray-300 shadow-md">
+        <div className="mb-6">
+          <label htmlFor="url" className="block mb-3 font-bold text-xl text-gray-900">
+            URL della pagina
+          </label>
+          <input
+            type="url"
+            id="url"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="w-full p-4 border-2 border-gray-400 rounded-md text-xl text-black font-medium bg-white focus:outline-none focus:ring-4 focus:ring-blue-300 focus:border-blue-500"
+            placeholder="https://example.com"
+            style={{caretColor: 'black'}}
+            required
+          />
+        </div>
+
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-4/5 mb-10 px-10 py-6 bg-blue-700 text-white rounded-xl font-bold text-2xl hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg transition-all duration-200 transform hover:scale-105 ${
+          className={`px-8 py-4 bg-blue-700 text-white rounded-md font-bold text-lg hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-md ${
             isLoading ? 'opacity-70 cursor-not-allowed' : ''
           }`}
         >
           {isLoading ? 'Analisi in corso...' : 'Analizza pagina'}
         </button>
-
-        
       </form>
     </div>
   );
