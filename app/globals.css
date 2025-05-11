@@ -17,3 +17,84 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Stili per l'accessibilità */
+
+/* Stile per dislessia - utilizza un font più leggibile */
+html.dyslexic {
+  font-family: "Open Sans", "Comic Sans MS", "Verdana", sans-serif;
+  letter-spacing: 0.05em;
+  word-spacing: 0.15em;
+  line-height: 1.5;
+}
+
+html.dyslexic p {
+  max-width: 70ch;
+  text-align: left;
+}
+
+/* Stili per i tipi di daltonismo */
+html.protanopia {
+  filter: url("#protanopia-filter");
+}
+
+html.deuteranopia {
+  filter: url("#deuteranopia-filter");
+}
+
+html.tritanopia {
+  filter: url("#tritanopia-filter");
+}
+
+/* Dimensioni dei font */
+html.font-size-large {
+  font-size: 120%;
+}
+
+html.font-size-extra-large {
+  font-size: 150%;
+}
+
+/* Alto contrasto */
+html.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+html.high-contrast * {
+  background-color: black !important;
+  color: white !important;
+  border-color: white !important;
+}
+
+html.high-contrast img, 
+html.high-contrast video {
+  filter: grayscale(100%) contrast(120%);
+}
+
+html.high-contrast button,
+html.high-contrast a {
+  border: 2px solid white !important;
+  padding: 0.25rem !important;
+}
+
+/* Riduzione del movimento */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

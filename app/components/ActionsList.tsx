@@ -422,9 +422,6 @@ export default function ActionsList() {
                     </div>
                     <div className="text-base text-gray-700">{element.description}</div>
                   </div>
-                  <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-md font-bold">
-                    Importanza: {element.importance}/10
-                  </div>
                 </div>
                 
                 {element.type === 'select' && (

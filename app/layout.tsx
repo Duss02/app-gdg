@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { UserConfigProvider } from "./context/UserConfigContext";
+import { AccessibilityStyler } from "./components/AccessibilityStyler";
+import { ColorBlindFilters } from "./components/ColorBlindFilters";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +31,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserConfigProvider>
+          <AccessibilityStyler />
+          <ColorBlindFilters />
           {children}
         </UserConfigProvider>
       </body>
