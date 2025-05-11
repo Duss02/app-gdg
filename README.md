@@ -19,32 +19,64 @@ Make sure that the server is running in localhost:8000 as it will be used to do 
 
 ### Action Data Format
 
-The application accepts actions as a URL-encoded parameter with the following format:
+The application accepts actions as a URL-encoded parameter. Each action is represented by one of the following JSON formats, and elements can be of any of these types:
 
+#### Click Element
 ```json
 {
-  "clickElements": [
-    {
-      "id": "string or null if not available",
-      "label": "text displayed on the element",
-      "description": "short description of what this element does"
-    }
-  ],
-  "selectElements": [
-    {
-      "id": "string or null if not available",
-      "label": "text associated with this selection element",
-      "description": "what this selection controls or influences",
-      "options": ["option1", "option2", "option3"]
-    }
-  ],
-  "inputElements": [
+  "id": "string or null if not available",
+  "label": "text displayed on the element",
+  "description": "short description of what this element does",
+  "importance": "number indicating the importance of the element",
+  "type": "click"
+}
+```
+
+#### Select Element
+```json
+{
+  "id": "string or null if not available",
+  "label": "text associated with this selection element",
+  "description": "what this selection controls or influences",
+  "importance": "number indicating the importance of the element",
+  "type": "select",
+  "options": ["option1", "option2", "option3"]
+}
+```
+
+#### Input Element
+```json
+{
+  "id": "string or null if not available",
+  "label": "label text of the field",
+  "description": "what information this field collects",
+  "importance": "number indicating the importance of the element",
+  "type": "input",
+  "placeholder": "placeholder text if present, otherwise empty string",
+  "inputType": "text, number, email, or password"
+}
+```
+
+#### Form Element
+```json
+{
+  "id": "string or null if not available",
+  "label": "text displayed on the form element",
+  "description": "short description of what this form does",
+  "importance": "number indicating the importance of the form",
+  "type": "form",
+  "submitButton": {
+    "id": "string or null if not available",
+    "label": "text displayed on the submit button"
+  },
+  "inputs": [
     {
       "id": "string or null if not available",
       "label": "label text of the field",
       "description": "what information this field collects",
       "placeholder": "placeholder text if present, otherwise empty string",
-      "type": "text, number, email, or password"
+      "inputType": "text, number, email, or password",
+      "required": "boolean indicating if the field is required"
     }
   ]
 }
